@@ -25,11 +25,17 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DogController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+
+    Route::get('/favorite-breeds', [App\Http\Controllers\FavoriteBreedController::class, 'index'])->name('favorite-breeds');
+
+    Route::post('/dogs/save', [App\Http\Controllers\DogSelectionController::class, 'store'])->name('dogs.save');
+    Route::get('/users/dog-selections', [App\Http\Controllers\DogSelectionController::class, 'index'])->name('users.dog-selections');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
