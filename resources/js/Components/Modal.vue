@@ -31,7 +31,7 @@ watch(
 
 const close = () => {
     if (props.closeable) {
-        emit('close');
+        emit('close'); // Emit close event
     }
 };
 
@@ -42,7 +42,6 @@ const closeOnEscape = (e) => {
 };
 
 onMounted(() => document.addEventListener('keydown', closeOnEscape));
-
 onUnmounted(() => {
     document.removeEventListener('keydown', closeOnEscape);
     document.body.style.overflow = null;

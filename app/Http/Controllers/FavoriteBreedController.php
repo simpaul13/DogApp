@@ -28,7 +28,7 @@ class FavoriteBreedController extends Controller
                 ];
             });
 
-        return Inertia::render('LikedDogs', [
+        return Inertia::render('FavoriteBreeds', [
             'myLikedDogs' => $myLikedDogs,
             'otherUsers' => $otherUsers,
         ]);

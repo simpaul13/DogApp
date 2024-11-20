@@ -17,24 +17,18 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', [App\Http\Controllers\DogController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/dogs/image/{breed}', [App\Http\Controllers\DogController::class, 'fetchImage'])->name('dogs.fetchImage');
 
-    Route::get('/favorite-breeds', [App\Http\Controllers\FavoriteBreedController::class, 'index'])->name('favorite-breeds');
+    Route::get('/dogs/{breed}/likes', [App\Http\Controllers\DogController::class, 'getLikes'])->name('dogs.likes');
 
     Route::post('/dogs/save', [App\Http\Controllers\DogSelectionController::class, 'store'])->name('dogs.save');
-    Route::get('/users/dog-selections', [App\Http\Controllers\DogSelectionController::class, 'index'])->name('users.dog-selections');
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
